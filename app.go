@@ -11,6 +11,8 @@ import (
 
 type HandlerFunc func(*App)
 
+type Map map[string]interface{}
+
 type App struct {
 	req           *http.Request
 	resp          http.ResponseWriter

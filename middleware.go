@@ -16,15 +16,17 @@ func BasicAuth(username, password string) Middleware {
 		return func(app *App) {
 			un, pw, ok := app.HttpRequest().BasicAuth()
 			if !ok {
-				app.SetStatusCode(http.StatusUnauthorized)
-				app.ResponseWriter().Write([]byte("unautorized"))
+				app.JSON(http.StatusUnauthorized, map[string]interface{}{
+					"err": "not provided",
+				})
 
 				return
 			}
 
 			if un != username && pw != password {
-				app.SetStatusCode(http.StatusUnauthorized)
-				app.ResponseWriter().Write([]byte("wrong username/password"))
+				app.JSON(http.StatusUnauthorized, map[string]interface{}{
+					"err": "wrong username/password",
+				})
 
 				return
 			}
