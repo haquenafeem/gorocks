@@ -29,6 +29,10 @@ func New() *App {
 }
 
 func (app *App) set404() {
+	if app.resp == nil {
+		return
+	}
+
 	app.resp.WriteHeader(http.StatusNotFound)
 }
 
@@ -157,10 +161,18 @@ func (app *App) ResponseWriter() http.ResponseWriter {
 }
 
 func (app *App) SetStatusCode(code int) {
+	if app.resp == nil {
+		return
+	}
+
 	app.resp.WriteHeader(code)
 }
 
 func (app *App) SetHeader(key, value string) {
+	if app.resp == nil {
+		return
+	}
+
 	app.resp.Header().Set(key, value)
 }
 
