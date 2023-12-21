@@ -36,7 +36,7 @@ func runTodo() {
 
 	app.Use(TimeTaken)
 	// app.Use(gorocks.ApplicationJSON)
-	app.Use(gorocks.BasicAuth("user", "xp1"))
+	// app.Use(gorocks.BasicAuth("user", "xp1"))
 
 	app.Get("/todos", gorocks.ResponseWithHeaders(map[string]string{
 		"key1":         "val1",
@@ -50,6 +50,12 @@ func runTodo() {
 	app.Get("/index", func(app *gorocks.App) {
 		app.SetHeader("Content-Type", "text/html")
 		app.ResponseWriter().Write([]byte("<h1>Hello<h2>"))
+	})
+
+	app.Get("/", func(app *gorocks.App) {
+		app.JSON(400, map[string]interface{}{
+			"key": "value",
+		})
 	})
 
 	app.PrintRoutes()

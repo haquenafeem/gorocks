@@ -1,7 +1,6 @@
 package gorocks
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -18,6 +17,4 @@ func (r *routeBlock) setUrlParams(path string) {
 	for i, value := range r.urlParamOrder {
 		r.urlParams[value] = segments[i-1]
 	}
-
-	fmt.Println("url params ===>", r.urlParams)
 }

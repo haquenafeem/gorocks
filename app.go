@@ -38,6 +38,10 @@ func (app *App) set404() {
 
 func (app *App) processPath(path string) (string, map[int]string) {
 	urlParams := make(map[int]string)
+	if path == emptyString || path == slash {
+		return path, urlParams
+	}
+
 	segments := strings.Split(path, "/")
 	if len(segments) == 0 {
 		return path, urlParams
@@ -93,7 +97,7 @@ func (app *App) prefixFix(path string) string {
 }
 
 func (app *App) suffixFix(path string) string {
-	if path == "" {
+	if path == emptyString {
 		return path
 	}
 
@@ -105,14 +109,14 @@ func (app *App) suffixFix(path string) string {
 }
 
 func (app *App) pathFix(path string) string {
-	if path == "" {
+	if path == emptyString || path == slash {
 		return path
 	}
 
 	path = app.suffixFix(path)
 	path = app.prefixFix(path)
 
-	if path == "" {
+	if path == emptyString {
 		return slash
 	}
 
@@ -214,7 +218,7 @@ func (app *App) BindJson(obj interface{}) error {
 func (app *App) JSON(statusCode int, obj interface{}) error {
 	app.SetStatusCode(statusCode)
 
-	responseBytes, err := json.MarshalIndent(obj, "", "\t")
+	responseBytes, err := json.MarshalIndent(obj, emptyString, "\t")
 	if err != nil {
 		return err
 	}
