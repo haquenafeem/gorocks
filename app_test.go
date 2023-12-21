@@ -70,3 +70,26 @@ func TestPathFix(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestProcessPath(t *testing.T) {
+	app := New()
+	path, _ := app.processPath("/path/:id/:name")
+	if path != "/path/*/*" {
+		t.Fail()
+	}
+
+	path, _ = app.processPath("/")
+	if path != "/" {
+		t.Fail()
+	}
+}
+
+func TestAddRegexToMap(t *testing.T) {
+	app := New()
+	app.addToRegexMap("/*")
+
+	regex := app.routeRegexMap["/*"]
+	if regex.String() != "^\\/[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$" {
+		t.Fail()
+	}
+}
