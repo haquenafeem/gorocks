@@ -52,3 +52,6 @@ func TimeTaken(next gorocks.HandlerFunc) gorocks.HandlerFunc {
 //         "message": "ok"
 // }
 ```
+<p>
+  More Example <a href="https://github.com/haquenafeem/gorocks/tree/main/example">Here</a>
+</p>
