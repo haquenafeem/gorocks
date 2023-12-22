@@ -47,10 +47,9 @@ func runTodo() {
 	app.Post("/todos", post)
 	app.Delete("/todos/:id", delete)
 	app.Put("/todos/:id", update)
-	app.Get("/index", func(app *gorocks.App) {
-		app.SetHeader("Content-Type", "text/html")
-		app.ResponseWriter().Write([]byte("<h1>Hello<h2>"))
-	})
+	app.Get("/index", gorocks.ResponseWithHeaders(map[string]string{
+		"Content-Type": "text/html",
+	})(index))
 
 	app.Get("/", func(app *gorocks.App) {
 		app.JSON(400, map[string]interface{}{
@@ -61,6 +60,11 @@ func runTodo() {
 	app.PrintRoutes()
 	fmt.Println("app starting at :3002")
 	app.Run(":3002")
+}
+
+func index(app *gorocks.App) {
+	app.SetHeader("Content-Type", "text/html")
+	app.ResponseWriter().Write([]byte("<h1>Hello<h2>"))
 }
 
 func update(app *gorocks.App) {
